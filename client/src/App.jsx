@@ -188,7 +188,8 @@ class App extends React.Component {
               )}
             </boot.ListGroup>
             <h4>Payment through Adyen Payments Processing API</h4>
-              Ready to Pay? Test Card Info Below:
+            <h4> Total: $500 USD </h4>
+              Ready to Pay? Input Fake Card Info Below:
               <div>
               4646 4646 4646 4644
               <div> EXP: 03/30, CVC: 737 </div>
