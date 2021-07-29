@@ -6,6 +6,8 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 import CountryList from './components/CountryList.jsx';
+import AddressForm from './components/AddressForm.jsx';
+import AccountForm from './components/AccountForm.jsx';
 
 import * as boot from 'react-bootstrap';
 
@@ -28,14 +30,30 @@ class App extends React.Component {
     this.state = {
       countries: [],
       currentCountry: '',
-      paymentMethods: {}
+      paymentMethods: {},
+      nameInfo: false,
+      addressInfo: false
 
     };
     this.handleClick = this.handleClick.bind(this);
     this.createNewCheckout = this.createNewCheckout.bind(this);
     this.checkoutRef = React.createRef();
     this.makePayment = this.makePayment.bind(this);
+    this.nameSubmitted = this.nameSubmitted.bind(this);
+    this.addressSubmitted = this.addressSubmitted.bind(this);
 
+  }
+
+  nameSubmitted () {
+    this.setState({
+      nameInfo: true
+    })
+  }
+
+  addressSubmitted() {
+    this.setState({
+      addressInfo: true
+    })
   }
 
 
@@ -43,7 +61,9 @@ class App extends React.Component {
     this.setState({
       currentCountry: 'United States',
       countries: ['United States', 'Netherlands', 'China', 'Japan', 'Korea'],
-      paymentMethods: {}
+      paymentMethods: {},
+      nameInfo: false,
+      addressInfo: false
     });
   }
 
@@ -144,25 +164,46 @@ class App extends React.Component {
 
   }
 
+
+
   render () {
-    return (<div>
-      <h1>Adyen Code Challenge - Drop-In</h1>
 
-      <h2> Select a Country: </h2>
+    return (
+    <div>
+      <h1>Multi-Step Checkout</h1>
 
-      <boot.ListGroup>
-        {this.state.countries.map((country) =>
-          <CountryList country={country} handleClick={this.handleClick.bind(this)} />
-        )}
-      </boot.ListGroup>
+        <AccountForm nameSubmitted={this.nameSubmitted} />
 
-      <h4>Payment</h4>
-      Ready to Pay?
-      <span className="justify-content-between align-items-center">
-        <button onClick={(e) => this.getPaymentMethod(e)}> Click Here </button>
-      </span>
 
-      <div ref={this.checkoutRef}></div>
+        {this.state.nameInfo && <AddressForm addressSubmitted={this.addressSubmitted}/ > }
+
+
+        {this.state.addressInfo &&
+          <div>
+            <h4> Billing Country: </h4>
+            <boot.ListGroup>
+              {this.state.countries.map((country) =>
+                <CountryList country={country} handleClick={this.handleClick.bind(this)} />
+              )}
+            </boot.ListGroup>
+            <h4>Payment through Adyen Payments Processing API</h4>
+              Ready to Pay? Test Card Info Below:
+              <div>
+              4646 4646 4646 4644
+              <div> EXP: 03/30, CVC: 737 </div>
+
+              </div>
+            <span className="justify-content-between align-items-center">
+              <button onClick={(e) => this.getPaymentMethod(e)}> Click Here </button>
+            </span>
+          </div>
+        }
+
+        <div ref={this.checkoutRef}></div>
+
+
+
+
     </div>);
   }
 

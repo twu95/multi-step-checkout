@@ -13,7 +13,7 @@ var CountryList = ({country, handleClick}) => {
         <div className="radio">
           <label>
             <input type="radio" value={country} onClick={(e) => handleClick(e)} name="select-country" />
-            Country ---> {country}
+            Country : {country}
           </label>
         </div>
 
