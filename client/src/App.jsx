@@ -11,7 +11,8 @@ import AccountForm from './components/AccountForm.jsx';
 
 import * as boot from 'react-bootstrap';
 
-import {CLIENT_KEY} from '../../config';
+// import {CLIENT_KEY} from '../../config';
+const CLIENT_KEY = process.env.CLIENT_KEY;
 
 const countryCodes = {
   'United States': 'US',
